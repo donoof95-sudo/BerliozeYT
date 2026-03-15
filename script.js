@@ -1,6 +1,7 @@
 const SHEET_ID = "1uhOMr_5kwoOB8krFZlhgvhcGA4W1kjagj8SMjg4ye8w";
 const SHEET_GID = "0";
 const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${SHEET_GID}`;
+const AUTO_REFRESH_MS = 5 * 60 * 1000;
 
 const COUNTRY_CONFIG = [
     { key: "europe", label: "Europe", currency: "EUR", rateTokens: null },
@@ -25,6 +26,7 @@ const PRODUCTS = [
 const table = document.getElementById("pricing-table");
 const tableHead = table.querySelector("thead");
 const tableBody = table.querySelector("tbody");
+const tableFoot = table.querySelector("tfoot");
 const statusElement = document.getElementById("table-status");
 
 function parseCsv(text) {
@@ -91,6 +93,13 @@ function formatEuro(value) {
         currency: "EUR",
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
+    }).format(value);
+}
+
+function formatRate(value) {
+    return new Intl.NumberFormat("fr-FR", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 5
     }).format(value);
 }
 
@@ -174,6 +183,21 @@ function renderTable(rates) {
         return `<tr><th scope="row">${product.name}</th>${cells}</tr>`;
     }).join("");
 
+    tableFoot.innerHTML = `
+        <tr class="rates-row">
+            <th scope="row">Taux utilisés</th>
+            ${COUNTRY_CONFIG.map((country) => {
+                const rate = rates[country.key];
+
+                if (!Number.isFinite(rate) || rate === 0) {
+                    return `<td>-</td>`;
+                }
+
+                return `<td>1 EUR = ${formatRate(rate)} ${country.currency}</td>`;
+            }).join("")}
+        </tr>
+    `;
+
     const missingRateCountries = COUNTRY_CONFIG
         .filter((country) => country.key !== "europe" && !Number.isFinite(rates[country.key]))
         .map((country) => country.label);
@@ -212,8 +236,10 @@ async function loadSheetRates() {
                 </td>
             </tr>
         `;
+        tableFoot.innerHTML = "";
         console.error("Erreur lors du chargement des taux :", error);
     }
 }
 
 loadSheetRates();
+window.setInterval(loadSheetRates, AUTO_REFRESH_MS);
