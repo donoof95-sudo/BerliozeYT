@@ -368,6 +368,73 @@ h1 {
     backdrop-filter: blur(10px);
 }
 
+.about-card {
+    display: grid;
+    gap: 24px;
+    padding: 30px;
+    border: 1px solid var(--line);
+    border-radius: 26px;
+    background:
+        linear-gradient(180deg, rgba(8, 16, 31, 0.88), rgba(4, 9, 19, 0.94)),
+        radial-gradient(circle at top left, rgba(95, 209, 255, 0.12), transparent 30%);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(10px);
+}
+
+.legal-card {
+    display: grid;
+    gap: 18px;
+    padding: 30px;
+    border: 1px solid var(--line);
+    border-radius: 26px;
+    background:
+        linear-gradient(180deg, rgba(8, 16, 31, 0.88), rgba(4, 9, 19, 0.94)),
+        radial-gradient(circle at top left, rgba(95, 209, 255, 0.12), transparent 30%);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(10px);
+}
+
+.legal-panel {
+    padding: 22px;
+    border: 1px solid rgba(95, 209, 255, 0.14);
+    border-radius: 22px;
+    background: rgba(3, 8, 18, 0.9);
+}
+
+.legal-panel p {
+    margin-bottom: 0;
+    color: #d8f3ff;
+    line-height: 1.7;
+}
+
+.about-hero {
+    min-width: 0;
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.about-panel {
+    padding: 22px;
+    border: 1px solid rgba(95, 209, 255, 0.14);
+    border-radius: 22px;
+    background: rgba(3, 8, 18, 0.9);
+}
+
+.about-panel h2 {
+    margin-bottom: 10px;
+    font-size: 1.08rem;
+}
+
+.about-panel p {
+    margin-bottom: 0;
+    color: #d8f3ff;
+    line-height: 1.6;
+}
+
 .contact-copy {
     min-width: 0;
 }
@@ -662,6 +729,18 @@ tbody tr:hover th {
         padding: 22px;
     }
 
+    .about-card {
+        padding: 22px;
+    }
+
+    .legal-card {
+        padding: 22px;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+
     .hero::before,
     .hero::after {
         opacity: 0.5;
@@ -826,7 +905,27 @@ tbody tr:hover th {
         border-radius: 20px;
     }
 
+    .about-card {
+        padding: 16px;
+        border-radius: 20px;
+    }
+
+    .legal-card {
+        padding: 16px;
+        border-radius: 20px;
+    }
+
     .contact-form {
+        padding: 16px;
+        border-radius: 18px;
+    }
+
+    .about-panel {
+        padding: 16px;
+        border-radius: 18px;
+    }
+
+    .legal-panel {
         padding: 16px;
         border-radius: 18px;
     }
@@ -888,6 +987,10 @@ tbody tr:hover th {
     }
 
     .contact-card,
+    .about-card,
+    .legal-card,
+    .about-panel,
+    .legal-panel,
     .contact-form {
         border-radius: 16px;
     }
