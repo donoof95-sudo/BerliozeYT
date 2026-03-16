@@ -32,7 +32,10 @@ const PRODUCTS = [
 const EXTRA_PRODUCTS = [
     { name: "Pack tickets III x7", image: "img/pack ticket dragons 3 - pack de 7.webp", europe: 20.93, usa: 20.93, philippines: 1250, australia: 32.99, canada: 28.99, taiwan: 690 },
     { name: "Pack tickets III x14", image: "img/pack ticket dragons 3 - pack de 14.webp", europe: 41.86, usa: 41.86, philippines: 2510, australia: 65.99, canada: 57.99, taiwan: 1390 },
-    { name: "Pack tickets III x30", image: "img/pack ticket dragons 3 - pack de 30.webp", europe: 89.70, usa: 89.97, philippines: 5390, australia: 139.99, canada: 119.99, taiwan: 2990 }
+    { name: "Pack tickets III x30", image: "img/pack ticket dragons 3 - pack de 30.webp", europe: 89.70, usa: 89.97, philippines: 5390, australia: 139.99, canada: 119.99, taiwan: 2990 },
+    { name: "Pack de base tickets", image: "img/OFFRES~2.WEB", description: "Ticket IV x1, Ticket V x1, Ticket VI x1 + Piece du dragon x35", europe: 34.97, usa: 34.97, philippines: 2088.8, australia: 53.97, canada: 48.97, taiwan: 1120 },
+    { name: "Offre spéciale avancée", image: "img/OFFRES~1.WEB", description: "Ticket IV x1, Ticket V x1, Ticket VI x1, Ticket VII x1, Ticket VIII x1 + Piece du dragon x185", europe: 184.95, usa: 184.95, philippines: 11090, australia: 282.95, canada: 258.95, taiwan: 6150 },
+    { name: "Super offre spéciale tickets", image: "img/SUPERO~1.WEB", description: "Ticket IV x1, Ticket V x1, Ticket VI x1, Ticket VII x1, Ticket VIII x3 + Piece du dragon x385", europe: 384.93, usa: 384.93, philippines: 23090, australia: 582.93, canada: 538.93, taiwan: 12730 }
 ];
 
 const ALL_PRODUCTS = [...PRODUCTS, ...EXTRA_PRODUCTS];
@@ -53,14 +56,17 @@ const mobileTableToggle = document.getElementById("mobile-table-toggle");
 const mobileTableDrawer = document.getElementById("mobile-table-drawer");
 const mobileTableClose = document.getElementById("mobile-table-close");
 const mobileTableBackdrop = document.getElementById("mobile-table-backdrop");
-const mobileViewport = window.matchMedia("(max-width: 1190px)");
+
+function isCompactLayout() {
+    return window.getComputedStyle(tableWrap).display === "none";
+}
 
 function setMobileDrawerOpen(isOpen) {
     if (!mobileTableDrawer || !mobileTableToggle || !mobileTableBackdrop) {
         return;
     }
 
-    const shouldOpen = isOpen && mobileViewport.matches;
+    const shouldOpen = isOpen && isCompactLayout();
     mobileTableDrawer.classList.toggle("is-open", shouldOpen);
     mobileTableDrawer.setAttribute("aria-hidden", String(!shouldOpen));
     mobileTableToggle.setAttribute("aria-expanded", String(shouldOpen));
@@ -125,7 +131,7 @@ function handleStickyHeaderVisibility() {
 }
 
 function setupStickyHeader() {
-    if (!stickyHead || !tableWrap || mobileViewport.matches) {
+    if (!stickyHead || !tableWrap || isCompactLayout()) {
         if (stickyHead) {
             stickyHead.innerHTML = "";
             stickyHead.classList.remove("is-visible");
@@ -186,7 +192,10 @@ function renderMobilePricing(rates) {
             <article class="mobile-pricing-row">
                 <div class="mobile-pricing-product">
                     ${imageMarkup}
-                    <span class="mobile-pricing-name">${product.name}</span>
+                    <div class="mobile-pricing-copy">
+                        <span class="mobile-pricing-name">${product.name}</span>
+                        ${product.description ? `<span class="mobile-pricing-description">${product.description}</span>` : ""}
+                    </div>
                 </div>
                 <div class="mobile-pricing-best">
                     <span class="mobile-pricing-country">${bestValue ? bestValue.label : "-"}</span>
@@ -257,7 +266,10 @@ function renderFullTable(targetHead, targetBody, targetFoot, rates) {
                 <th scope="row">
                     <div class="product-label">
                         ${imageMarkup}
-                        <span class="product-name">${product.name}</span>
+                        <div class="product-copy">
+                            <span class="product-name">${product.name}</span>
+                            ${product.description ? `<span class="product-description">${product.description}</span>` : ""}
+                        </div>
                     </div>
                 </th>
                 ${cells}
@@ -441,7 +453,10 @@ function renderTable(rates) {
                 <th scope="row">
                     <div class="product-label">
                         ${imageMarkup}
-                        <span class="product-name">${product.name}</span>
+                        <div class="product-copy">
+                            <span class="product-name">${product.name}</span>
+                            ${product.description ? `<span class="product-description">${product.description}</span>` : ""}
+                        </div>
                     </div>
                 </th>
                 ${cells}
@@ -539,9 +554,7 @@ if (tableWrap) {
 }
 
 window.addEventListener("scroll", handleStickyHeaderVisibility, { passive: true });
-window.addEventListener("resize", setupStickyHeader);
-
-mobileViewport.addEventListener("change", () => {
+window.addEventListener("resize", () => {
     setMobileDrawerOpen(false);
     setupStickyHeader();
 });
