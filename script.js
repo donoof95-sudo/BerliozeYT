@@ -44,34 +44,13 @@ const table = document.getElementById("pricing-table");
 const tableHead = table.querySelector("thead");
 const tableBody = table.querySelector("tbody");
 const tableFoot = table.querySelector("tfoot");
-const mobileTable = document.getElementById("pricing-table-mobile");
-const mobileTableHead = mobileTable.querySelector("thead");
-const mobileTableBody = mobileTable.querySelector("tbody");
-const mobileTableFoot = mobileTable.querySelector("tfoot");
 const statusElement = document.getElementById("table-status");
 const mobilePricingList = document.getElementById("mobile-pricing-list");
 const tableWrap = document.querySelector(".desktop-table-wrap");
 const stickyHead = document.getElementById("pricing-table-sticky-head");
-const mobileTableToggle = document.getElementById("mobile-table-toggle");
-const mobileTableDrawer = document.getElementById("mobile-table-drawer");
-const mobileTableClose = document.getElementById("mobile-table-close");
-const mobileTableBackdrop = document.getElementById("mobile-table-backdrop");
 
 function isCompactLayout() {
     return window.getComputedStyle(tableWrap).display === "none";
-}
-
-function setMobileDrawerOpen(isOpen) {
-    if (!mobileTableDrawer || !mobileTableToggle || !mobileTableBackdrop) {
-        return;
-    }
-
-    const shouldOpen = isOpen && isCompactLayout();
-    mobileTableDrawer.classList.toggle("is-open", shouldOpen);
-    mobileTableDrawer.setAttribute("aria-hidden", String(!shouldOpen));
-    mobileTableToggle.setAttribute("aria-expanded", String(shouldOpen));
-    mobileTableBackdrop.hidden = !shouldOpen;
-    document.body.classList.toggle("mobile-drawer-open", shouldOpen);
 }
 
 function syncStickyHeader() {
@@ -479,10 +458,6 @@ function renderTable(rates) {
         </tr>
     `;
 
-    mobileTableHead.innerHTML = tableHead.innerHTML;
-    mobileTableBody.innerHTML = tableBody.innerHTML;
-    mobileTableFoot.innerHTML = tableFoot.innerHTML;
-
     const missingRateCountries = COUNTRY_CONFIG
         .filter((country) => country.key !== "europe" && !Number.isFinite(rates[country.key]))
         .map((country) => country.label);
@@ -526,13 +501,9 @@ async function loadSheetRates() {
             </tr>
         `;
         tableFoot.innerHTML = "";
-        mobileTableHead.innerHTML = "";
-        mobileTableBody.innerHTML = "";
-        mobileTableFoot.innerHTML = "";
         if (mobilePricingList) {
             mobilePricingList.innerHTML = "";
         }
-        setMobileDrawerOpen(false);
         if (stickyHead) {
             stickyHead.innerHTML = "";
             stickyHead.classList.remove("is-visible");
@@ -555,30 +526,5 @@ if (tableWrap) {
 
 window.addEventListener("scroll", handleStickyHeaderVisibility, { passive: true });
 window.addEventListener("resize", () => {
-    setMobileDrawerOpen(false);
     setupStickyHeader();
-});
-
-if (mobileTableToggle) {
-    mobileTableToggle.addEventListener("click", () => {
-        setMobileDrawerOpen(true);
-    });
-}
-
-if (mobileTableClose) {
-    mobileTableClose.addEventListener("click", () => {
-        setMobileDrawerOpen(false);
-    });
-}
-
-if (mobileTableBackdrop) {
-    mobileTableBackdrop.addEventListener("click", () => {
-        setMobileDrawerOpen(false);
-    });
-}
-
-window.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-        setMobileDrawerOpen(false);
-    }
 });
