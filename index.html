@@ -26,7 +26,7 @@
         <section class="hero">
             <div class="hero-copy">
                 <p class="eyebrow">Ne gaspille plus ton argent</p>
-                <h1>Tableau des prix par pays</h1>
+                <h1>CALL OF DRAGONS PACK CALCULATOR</h1>
                 <p class="intro">
                     
                 </p>
@@ -64,7 +64,48 @@
                 </p>
             </div>
 
-            <div class="table-wrap">
+            <section class="mobile-pricing" aria-label="Meilleur prix par objet sur mobile">
+                <div class="mobile-pricing-header">
+                    <h3>Vue mobile</h3>
+                    <p>Objet + meilleur pays/prix</p>
+                </div>
+                <div class="mobile-pricing-columns" aria-hidden="true">
+                    <span>Objet</span>
+                    <span>Meilleur prix</span>
+                </div>
+                <div id="mobile-pricing-list" class="mobile-pricing-list"></div>
+            </section>
+
+            <div id="pricing-table-sticky-head" class="table-sticky-head" aria-hidden="true"></div>
+
+            <button
+                id="mobile-table-toggle"
+                class="mobile-table-toggle"
+                type="button"
+                aria-controls="mobile-table-drawer"
+                aria-expanded="false"
+            >
+                Tableau complet
+            </button>
+
+            <div id="mobile-table-drawer" class="mobile-table-drawer" aria-hidden="true">
+                <div class="mobile-table-drawer-header">
+                    <h3>Tableau complet</h3>
+                    <button id="mobile-table-close" class="mobile-table-close" type="button" aria-label="Fermer le tableau complet">Fermer</button>
+                </div>
+
+                <div class="table-wrap mobile-table-wrap">
+                    <table id="pricing-table-mobile">
+                        <thead></thead>
+                        <tbody></tbody>
+                        <tfoot></tfoot>
+                    </table>
+                </div>
+            </div>
+
+            <div id="mobile-table-backdrop" class="mobile-table-backdrop" hidden></div>
+
+            <div class="table-wrap desktop-table-wrap">
                 <table id="pricing-table">
                     <thead></thead>
                     <tbody></tbody>
