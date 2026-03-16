@@ -1076,12 +1076,18 @@ tbody tr:hover th {
     }
 
     .top-nav {
-        justify-content: stretch;
-        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
     }
 
     .nav-link {
-        flex: 1 1 0;
+        flex: 0 1 calc(50% - 4px);
+        min-width: 0;
+        padding: 10px 8px;
+        font-size: 0.78rem;
+        text-align: center;
+        white-space: normal;
     }
 
     .site-signature {
@@ -1269,6 +1275,13 @@ tbody tr:hover th {
 @media (max-width: 420px) {
     .page {
         width: calc(100% - 12px);
+    }
+
+    .nav-link {
+        flex-basis: calc(50% - 5px);
+        min-height: 40px;
+        padding: 9px 6px;
+        font-size: 0.74rem;
     }
 
     .hero,
