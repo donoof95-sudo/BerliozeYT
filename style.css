@@ -19,11 +19,15 @@
 }
 
 html {
+    width: 100%;
+    overflow-x: hidden;
     background: radial-gradient(circle at top, #0a1430 0%, var(--bg) 45%, var(--bg-deep) 100%);
 }
 
 body {
     margin: 0;
+    width: 100%;
+    max-width: 100%;
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;
@@ -111,6 +115,7 @@ body::after {
     position: relative;
     z-index: 1;
     width: min(1180px, calc(100% - 32px));
+    max-width: 100%;
     margin: 0 auto;
     padding: 42px 0 56px;
 }
@@ -586,6 +591,7 @@ h1 {
 .mobile-pricing {
     margin-bottom: 14px;
     padding: 16px;
+    min-width: 0;
     border: 1px solid rgba(95, 209, 255, 0.14);
     border-radius: 18px;
     background: rgba(3, 8, 18, 0.9);
@@ -594,9 +600,11 @@ h1 {
 .mobile-pricing-header {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
     gap: 12px;
     align-items: end;
     margin-bottom: 12px;
+    min-width: 0;
 }
 
 .mobile-pricing-header h3 {
@@ -625,6 +633,7 @@ h1 {
     gap: 10px;
     margin-bottom: 8px;
     padding: 0 6px;
+    min-width: 0;
     color: #8feeff;
     font-size: 0.72rem;
     font-weight: 700;
@@ -642,6 +651,7 @@ h1 {
     gap: 10px;
     align-items: center;
     padding: 12px;
+    min-width: 0;
     background: rgba(7, 18, 35, 0.72);
     border-bottom: 1px solid rgba(95, 209, 255, 0.1);
 }
@@ -709,6 +719,7 @@ h1 {
 
 .desktop-table-wrap {
     display: block;
+    min-width: 0;
 }
 
 .sheet-link {
@@ -1046,6 +1057,7 @@ tbody tr:hover th {
         width: calc(100% - 20px);
         margin-left: auto;
         margin-right: auto;
+        overflow-x: clip;
     }
 
     body::before {
@@ -1079,6 +1091,8 @@ tbody tr:hover th {
         justify-content: center;
         flex-wrap: wrap;
         gap: 8px;
+        width: 100%;
+        min-width: 0;
     }
 
     .nav-link {
@@ -1147,6 +1161,7 @@ tbody tr:hover th {
     .table-card {
         padding: 14px;
         border-radius: 20px;
+        overflow-x: clip;
     }
 
     .mobile-pricing {
@@ -1275,6 +1290,12 @@ tbody tr:hover th {
 @media (max-width: 420px) {
     .page {
         width: calc(100% - 12px);
+    }
+
+    .mobile-pricing-columns,
+    .mobile-pricing-row {
+        grid-template-columns: minmax(0, 1fr) 96px;
+        gap: 8px;
     }
 
     .nav-link {
